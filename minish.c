@@ -1,4 +1,7 @@
 #include <stdio.h> 
+#include <stdlib.h>
+
+#define MAXLINE 1024
 
 #define HELP_CD      "cd [..|dir] - cambia de directorio corriente"
 #define HELP_DIR     "dir [str]- muestra archivos en directorio corriente, que tengan 'str'"
@@ -21,10 +24,10 @@ struct builtin_struct builtin_arr[] = {
 
 int main(){
 
-    while(1){
+    char *line;
+
+    while(fgets(line, MAXLINE, stdin) != NULL){
         
-
-
     }
     return 0;
 
