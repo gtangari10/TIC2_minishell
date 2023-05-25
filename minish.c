@@ -1,12 +1,15 @@
 #include <stdio.h> 
+#include <stdlib.h>
+
+#define MAXLINE 1024
 
 
 int main(){
 
-    while(1){
+    char *line;
+
+    while(fgets(line, MAXLINE, stdin) != NULL){
         
-
-
     }
     return 0;
 
