@@ -60,7 +60,7 @@ void getword(char *line, char *word){
     printf("Largo: %i \n", length);
     // printf("%s \n", word);
 }
-
+/*
 int main() {
     char str[] = "Hello, world! This is a test.";
     char word[100];
@@ -97,4 +97,4 @@ int linea2argv (char *linea, int argc, char **argv){
     return 0;
     
 }
- 
+ */
