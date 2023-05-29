@@ -1,54 +1,64 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+//#include <wrappers.h>
 
 #define OUT 0
 #define IN  1
 #define MAXWORDLEN  50
 
-void getword(const char *str, char *word) {
-    char *start = str;
-    char *end;
+// void getword(char *str, char *word) {
+//     char *start = str;
+//     char *end;
 
-    // Saltear los primeros espacios vacios
-    while (*start && *start != ' ' && *start != '\tab'){
-        start++;
+//     // Saltear los primeros espacios vacios
+//     while (*start || *start == ' ' || *start == '\t'){
+//         start++;
+//     }
+
+//     // Encontrar el final de la prueba
+//     end = start;
+//     while (*end && *end != ' ' && *end != '\t'){
+//         end++;
+//     }
+
+//     // Copy the word to the output buffer
+//     int length = end - start;
+//     if (length > MAXWORDLEN - 1){
+//         //TODO MANDAR UN ERROR
+//     }
+//     printf("%i \n", length);
+//     // word = (char *) malloc_or_exit(length + 1);
+//     word = (char *) malloc(length + 1);
+    
+//     for (; start < end; start ++){
+//         *word++ = *start;
+//         printf("%c", *start);
+//     }
+//     for (int i = 0; i < length; i++){
+//         word --;
+//     }
+//     printf("HOLA %s", word);
+// }
+int is_separator(char c){
+    // Checks is a char is a separator
+
+    if (c == ' ' || c == '\t' || c == '\n' || c == EOF){
+        return 1;
     }
-
-    // Encontrar el final de la prueba
-    end = start;
-    while (*end && *end != ' ' && *end != '\tab')
-        end++;
-
-    // Copy the word to the output buffer
-    int length = end - start;
-    if (length > MAXWORDLEN - 1)
-        //TODO MANDAR UN ERROR
-    word = strdup_or_exit(start);
-    word[length] = '\0';
+    return 0;
 }
 
-
-void getword(char *str, char *word) {
-    int c;              // el valor de retorno de getchar() es un int !!!
-    int state;          // estado dentro o fuera de una palabra (IN/OUT)
-    int wordcount;      // cuenta palabras
-
-    wordcount = 0;
-    state = OUT;        // estado inicial es OUT
-
-    while ( (c=getchar()) != EOF) {
-
-        if (c == ' ' || c == '\t' || c == '\n') {
-            state = OUT;
-        } else if (state == OUT) {
-            state = IN;
-            wordcount++; // cada vez que empieza una palabra se incrementa el contador
-        }
+void getword(char *line, char *word){
+    printf("%s \n", line);
+    char *temp = word;
+    int length;
+    for (length = 0; is_separator(*(line + length)) == 0; length++){
+        printf("TRUE");
+        *temp++ = *(line+length);
     }
-
-
-    printf("%d \n", wordcount);
-    return 0;
+    printf("Largo: %i \n", length);
+    // printf("%s \n", word);
 }
 
 int main() {
@@ -56,11 +66,12 @@ int main() {
     char word[100];
 
     // Extract and print words from the string
-    const char *ptr = str;
+    char *ptr = str;
     while (*ptr) {
         getword(ptr, word);
         printf("Word: %s\n", word);
-        ptr += strlen(word) + 1; // Move to the next word
+        // ptr += strlen(word) + 1; // Move to the next word
+        ptr ++;
     }
 
     return 0;
@@ -83,7 +94,7 @@ int linea2argv (char *linea, int argc, char **argv){
     // ▪ Los strings apuntados por argv[0], argv[1], etc. se mallocarán. Es
     // responsabilidad de quien invoca a linea2argv, de hacer los free
     // correspondientes.
-
+    return 0;
     
 }
  
