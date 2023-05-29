@@ -1,8 +1,10 @@
 #include <stdio.h> 
 #include <stdlib.h>
+#include "minish.h"
 
 
 #define MAXLINE 1024
+#define MAXWORD 256
 
 #define HELP_CD      "cd [..|dir] - cambia de directorio corriente"
 #define HELP_DIR     "dir [str]- muestra archivos en directorio corriente, que tengan 'str'"
@@ -17,6 +19,10 @@
 #define HELP_GID    " - "
 #define HELP_UNSETENV " - "
 
+
+
+/*
+//Esto creo que es mejor idea tenerlo en el ejecutar
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
         { "dir", builtin_dir, HELP_DIR},
@@ -42,5 +48,31 @@ int main(){
         
     }
     return 0;
+
+}
+
+*/
+
+int main(){
+
+    FILE *fp;
+    char line[MAXLINE];
+    int argc = MAXWORD;
+    char *argv[MAXWORD];
+    int return_status = 0;
+
+
+    while(1){
+
+        if(fgets(line, MAXLINE, stdin) == NULL){
+            fprintf(stderr, "Ingrese un comando.\n");
+        }
+
+        fgets(line,MAXLINE,stdin);
+
+        argc = linea2argc(line, argc, argv); //updates the value of argc
+        return_status = ejecutar(argc, argv); //updates return_status
+        
+    }
 
 }
