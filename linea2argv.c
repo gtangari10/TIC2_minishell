@@ -29,6 +29,7 @@ int linea2argv (char *linea, int argc, char **argv){
     printf("%i", argc);
     return 0;
 }
+<<<<<<< HEAD
 // ▪ recibe una línea (texto con un \n final) y hace apuntar argv[0] a la primera
 // palabra, argv[1] a la segunda, etc.
 // ▪ argc+1 es el tamaño con el cual está definido argv en el invocador a esta
@@ -44,3 +45,6 @@ int linea2argv (char *linea, int argc, char **argv){
 // ▪ Los strings apuntados por argv[0], argv[1], etc. se mallocarán. Es
 // responsabilidad de quien invoca a linea2argv, de hacer los free
 // correspondientes.
+=======
+ */
+>>>>>>> cc17e3cfdae58ad1059d2a5728ca8b1b3d35fd7a
