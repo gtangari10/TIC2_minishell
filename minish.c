@@ -60,7 +60,7 @@ int main(){
     char line[MAXLINE];
     int argc = MAXWORD;
     char *argv[MAXWORD];
-    //int return_status = 0; //comentado para que no de warnings
+    int return_status = 0; //comentado para que no de warnings
 
     fprintf(stderr, "(minish)$ ");
     while(1){
@@ -68,10 +68,15 @@ int main(){
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
             //fprintf(stderr, "%s", line);
             argc = linea2argv(line, argc, argv); //updates the value of argc
+
+            //Tests argv
+            /*
             for(int i = 0; i < argc; i++){
                 fprintf(stderr,"%s\n", argv[i]);
             }
-            //return_status = ejecutar(argc, argv); //updates return_status
+            */
+            return_status = ejecutar(argc, argv); //updates return_status
+            
 
 
         }
