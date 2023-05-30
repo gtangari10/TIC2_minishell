@@ -3,9 +3,78 @@
 #include <stdlib.h>
 #include "wrappers.h"
 
-#define OUT 0
-#define IN  1
-#define MAXWORDLEN  50
+int is_separator(char c);
+char *eliminar_separadores_duplicados(char *s);
+void eliminar_primer_caracter(char *c);
+
+int main() {
+    char str[] = "Hello, \t   world!   \t This is\ta \ttest.";
+    char word[100];
+
+    eliminar_separadores_duplicados(str);
+    printf("%s \n", str);
+
+
+
+    // Extract and print words from the string
+    // char *ptr = str;
+    // while (*ptr) {
+    //     getword(ptr, word);
+    //     printf("Word: %s\n", word);
+    //     // ptr += strlen(word) + 1; // Move to the next word
+    //     ptr ++;
+    // }
+
+    return 0;
+}
+
+
+
+int is_separator(char c){
+    // Checks is a char is a separator
+    if (c == ' ' || c == '\t'){
+        printf("2");
+        return 1;
+    }
+    printf("1");
+    return 0;
+}
+
+char *
+eliminar_separadores_duplicados(char *s){
+    // La funcion usa punteros para eliminar los caracteres repetidos de la string s
+    // Devuelve un puntero a s (modificado)
+
+    // Toma el primer caracter y elimina todos los caracteres siguientes iguales a el
+    //(mueve todos los siguientes uno a la izquierda)
+    char first_char;
+    // para cada caracter, se fija cuales de los siguientes son iguales a el y los elimina
+    for (char *p = s; *p != '\0'; p++){
+        first_char = *p;
+        printf("No");
+        if (is_separator(first_char) == 1){
+            *p = ' ';
+            printf("Si");
+            for (char *next_char = p + 1; is_separator(*(next_char) == 1); next_char++){
+                eliminar_primer_caracter(next_char);
+                printf("Aca");
+            }
+        }
+    }
+    return s;
+}
+
+void
+eliminar_primer_caracter(char *s){
+    // Toma un string y elimina el primer caracter, para esto mueve todos los
+    // caracteres un lugar a la izquierda, incluido el \0, lo que cambia el largo
+    // del string.
+    char *l;
+    for (l = s; *l != '\0'; l++){
+            *l = *(l+1);
+        }
+    *l = *(l+1);
+}
 
 // void getword(char *str, char *word) {
 //     char *start = str;
@@ -40,14 +109,7 @@
 //     }
 //     printf("HOLA %s", word);
 // }
-int is_separator(char c){
-    // Checks is a char is a separator
 
-    if (c == ' ' || c == '\t' || c == '\n' || c == EOF){
-        return 1;
-    }
-    return 0;
-}
 
 void getword(char *line, char *word){
     printf("%s \n", line);
@@ -98,23 +160,3 @@ int linea2argv (char *linea, int argc, char **argv){
     
 }
  */
-
-
-int linea2argv(char *linea, int argc, char **argv){
-
-    char *token;
-    char delimiters[] = " \t";
-    token = strtok(linea, delimiters);
-
-
-    int count = 1;
-    while((strcmp(token, "\n") != 0) && token != NULL){
-        argv[count] = strdup_or_exit(token);
-        count++;
-        token = strtok(NULL, delimiters);
-
-    }
-
-    return count;
-
-}
