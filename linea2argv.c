@@ -122,6 +122,22 @@ void getword(char *line, char *word){
     printf("Largo: %i \n", length);
     // printf("%s \n", word);
 }
+/*
+int main() {
+    char str[] = "Hello, world! This is a test.";
+    char word[100];
+
+    // Extract and print words from the string
+    char *ptr = str;
+    while (*ptr) {
+        getword(ptr, word);
+        printf("Word: %s\n", word);
+        // ptr += strlen(word) + 1; // Move to the next word
+        ptr ++;
+    }
+
+    return 0;
+}
 
 
 int linea2argv (char *linea, int argc, char **argv){
@@ -143,7 +159,4 @@ int linea2argv (char *linea, int argc, char **argv){
     return 0;
     
 }
- 
-
-#define MAXWORD 256
-
+ */

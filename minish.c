@@ -55,11 +55,11 @@ int main(){
 
 int main(){
 
-    FILE *fp;
+    //FILE *fp; //Comentado para que no de warning
     char line[MAXLINE];
     int argc = MAXWORD;
     char *argv[MAXWORD];
-    int return_status = 0;
+    //int return_status = 0; //comentado para que no de warnings
 
 
     while(1){
@@ -70,8 +70,8 @@ int main(){
 
         fgets(line,MAXLINE,stdin);
 
-        argc = linea2argc(line, argc, argv); //updates the value of argc
-        return_status = ejecutar(argc, argv); //updates return_status
+        //argc = linea2argv(line, argc, argv); //updates the value of argc
+        //return_status = ejecutar(argc, argv); //updates return_status
         
     }
 
