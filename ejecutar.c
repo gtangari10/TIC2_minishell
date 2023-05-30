@@ -1,19 +1,6 @@
 #include <stdio.h> 
 #include "minish.h"
 
-#define HELP_CD "Esto es provisorio"
-#define HELP_DIR "Esto es provisorio"
-#define HELP_EXIT "Esto es provisorio"
-#define HELP_HELP "Esto es provisorio"
-#define HELP_HISTORY "Esto es provisorio"
-#define HELP_GETENV "Esto es provisorio"
-#define HELP_PID "Esto es provisorio"
-#define HELP_SETENV "Esto es provisorio"
-#define HELP_STATUS "Esto es provisorio"
-#define HELP_GID "Esto es provisorio"
-#define HELP_UNSETENV "Esto es provisorio"
-#define HELP_UID "Esto es provisorio"
-
 
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
@@ -34,7 +21,7 @@ struct builtin_struct builtin_arr[] = {
 //No hay nada testeado :D
 int ejecutar (int argc, char ** argv){
     for(int i=0; builtin_arr[i].cmd != NULL; i++){
-        if(strcmp(argv[0], builtin_arr[i].cmd) == 0){
+        if(strcmp(argv[0], builtin_arr[i]->cmd) == 0){
             return builtin_arr[i].func;
         }
 
