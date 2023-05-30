@@ -22,8 +22,6 @@
 
 
 
-/*
-//Esto creo que es mejor idea tenerlo en el ejecutar
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
         { "dir", builtin_dir, HELP_DIR},
@@ -41,18 +39,6 @@ struct builtin_struct builtin_arr[] = {
     };
 
 
-int main(){
-
-    char *line;
-
-    while(fgets(line, MAXLINE, stdin) != NULL){
-        
-    }
-    return 0;
-
-}
-
-*/
 
 int main(){
 
