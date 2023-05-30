@@ -13,5 +13,5 @@ int linea2argv (char *linea, int argc, char **argv){
         argv[arg_numbers++] = token;
         token = strtok(NULL, delimiters);
     }
-    return argc;
+    return arg_numbers;
 }
