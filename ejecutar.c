@@ -23,8 +23,7 @@ struct builtin_struct builtin_arr[] = {
 int ejecutar (int argc, char ** argv){
     for(int i=0; builtin_arr[i].cmd != NULL; i++){
         if(strcmp(argv[0], builtin_arr[i].cmd) == 0){
-            return (*builtin_arr[i].func)(argc, argv);
-            //return status(builtin_arr[i].func);
+            return (builtin_arr[i].func)(argc, argv);
         }
 
     }
