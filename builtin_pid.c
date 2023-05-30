@@ -1,5 +1,6 @@
 #include <stdio.h> 
 
 int builtin_pid (int argc, char ** argv){
-    return 0;
+    // no lleva parámetros, muestra el process id del shell
+    return getpid();
 }
