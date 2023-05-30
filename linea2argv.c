@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//#include <wrappers.h>
+#include "wrappers.h"
 
 #define OUT 0
 #define IN  1
@@ -98,3 +98,23 @@ int linea2argv (char *linea, int argc, char **argv){
     
 }
  */
+
+
+int linea2argv(char *linea, int argc, char **argv){
+
+    char *token;
+    char delimiters[] = " \t";
+    token = strtok(linea, delimiters);
+
+
+    int count = 1;
+    while((strcmp(token, "\n") != 0) && token != NULL){
+        argv[count] = strdup_or_exit(token);
+        count++;
+        token = strtok(NULL, delimiters);
+
+    }
+
+    return count;
+
+}

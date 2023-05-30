@@ -1,6 +1,7 @@
 #include <stdio.h> 
 #include <stdlib.h>
 #include "minish.h"
+#include <string.h>
 
 
 #define MAXLINE 1024
@@ -61,18 +62,17 @@ int main(){
     char *argv[MAXWORD];
     //int return_status = 0; //comentado para que no de warnings
 
-
+    fprintf(stderr, "(minish)$ ");
     while(1){
 
-        if(fgets(line, MAXLINE, stdin) == NULL){
-            fprintf(stderr, "Ingrese un comando.\n");
+        if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
+            fprintf(stderr, "%s", line);
+            argc = linea2argv(line, argc, argv); //updates the value of argc
+            //return_status = ejecutar(argc, argv); //updates return_status
+
+
         }
-
-        fgets(line,MAXLINE,stdin);
-
-        //argc = linea2argv(line, argc, argv); //updates the value of argc
-        //return_status = ejecutar(argc, argv); //updates return_status
-        
+        fprintf(stderr, "(minish)$ ");        
     }
 
-}
+} 

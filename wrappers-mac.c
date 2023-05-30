@@ -1,6 +1,7 @@
 /*
  * wrappers.c
  *
+ * ADAPTADA PARA MAC / USA ERR EN LUGAR DE ERROR
  * contiene funciones "wrapper", que invocan una función de la biblioteca estándar,
  * y controlan el valor de retorno.
  * Si es el valor esperado, lo retornan,
@@ -11,7 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <mach/error.h>
+#include <err.h>
 #include <errno.h>
 #include <string.h>
 
@@ -22,8 +23,7 @@ fopen_or_exit(const char *pathname, const char *mode)
     FILE *fp;
 
     if ( (fp = fopen(pathname, mode)) == NULL ) {
-        error(EXIT_FAILURE, errno, "fopen error file '%s', mode '%s' - exit\n", pathname, mode);
-
+        err(EXIT_FAILURE, "fopen error file '%s', mode '%s' - exit\n", pathname, mode);
     }
     return fp;
 }
@@ -37,9 +37,9 @@ fread_or_exit(void *ptr, size_t size, size_t nmemb, FILE *stream)
     n_read = fread(ptr, size, nmemb, stream);
     if (n_read != nmemb ) {
         if (feof(stream)) {
-            error(EXIT_FAILURE, 0, "fread EOF - exit\n");
+            err(EXIT_FAILURE, "fread EOF - exit\n");
         } else {
-            error(EXIT_FAILURE, errno, "fread error - exit\n");
+            err(EXIT_FAILURE, "fread error - exit\n");
         }
     }
     return n_read;
@@ -53,7 +53,7 @@ fwrite_or_exit(const void *ptr, size_t size, size_t nmemb, FILE *stream)
 
     n_written = fwrite(ptr, size, nmemb, stream);
     if (n_written != nmemb ) {
-        error(EXIT_FAILURE, errno, "fwrite error - exit\n");
+        err(EXIT_FAILURE, "fwrite error - exit\n");
     }
     return n_written;
 }
@@ -64,7 +64,7 @@ calloc_or_exit(size_t nmemb, size_t size)
 {
     void *p = calloc(nmemb, size);
     if (p == NULL) {        // no hay memoria para asignar
-        error(EXIT_FAILURE, errno, "calloc error - exit\n");
+        err(EXIT_FAILURE, "calloc error - exit\n");
     }
     return p;
 }
@@ -75,7 +75,7 @@ malloc_or_exit(size_t size)
 {
     void *p = malloc(size);
     if (p == NULL) {        // no hay memoria para asignar
-        error(EXIT_FAILURE, errno, "malloc error - exit\n");
+        err(EXIT_FAILURE, "malloc error - exit\n");
     }
     return p;
 }
