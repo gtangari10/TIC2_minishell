@@ -4,6 +4,7 @@
 int builtin_pid (){
     // no lleva parámetros, muestra el process id del shell
     pid_t pid = getpid();
-    fprintf(stderr,"El id del proceso es: %d\n",pid);
+    pid_t ppid = getppid();
+    fprintf(stderr,"pid: %d, ppid: %d\n",pid, ppid);
     return 0;
 }
