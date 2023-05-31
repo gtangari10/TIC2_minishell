@@ -79,7 +79,7 @@ extern int builtin_getenv (int argc, char ** argv);
 extern int builtin_gid ();
 extern int builtin_setenv (int argc, char ** argv);
 extern int builtin_pid ();
-extern int builtin_uid (int argc, char ** argv);
+extern int builtin_uid ();
 extern int builtin_unsetenv (int argc, char ** argv);
 extern int ejecutar (int argc, char ** argv);
 extern int externo (int argc, char ** argv);
