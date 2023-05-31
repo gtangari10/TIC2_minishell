@@ -36,11 +36,12 @@ int print_variables(int argc, char **argv){
         variable_name = argv[i];
         variable_value = getenv(argv[i]);
         if (variable_value != NULL){
-            printf("%s=%s \n", variable_name, variable_value);
+            fprintf(stderr, "%s=%s \n", variable_name, variable_value);
         }else{
             fprintf(stderr, "No se encuentra ninguna variable de ambiente con nombre: %s \n", variable_name);
             return 1;
         }
     }
+    return 0;
 }
 
