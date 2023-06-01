@@ -64,10 +64,11 @@ int main(){
             // }
             
             globalstatret = ejecutar(argc, argv); //updates return_status
-        } else{
-            fprintf(stderr, "\n");
-            exit(0);
-        }
+        } 
+        // else{
+        //     fprintf(stderr, "\n");
+        //     exit(0);
+        // }
         fprintf(stderr, "(minish) (%s):%s> ", name, path);
     }
 
