@@ -28,5 +28,5 @@ int externo (int argc, char ** argv){
     waitpid(pid, &status, 0);
 
 
-    return 0;
+    return status;
 }
