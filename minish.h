@@ -13,8 +13,8 @@
 #define HELP_SETENV  "setenv var valor - agrega o cambia valor de variable de ambiente"
 #define HELP_STATUS  "status - muestra status de retorno de ultimo comando ejecutado"
 #define HELP_UID     "uid - muestra nombre y número de usuario dueño del minish"
-#define HELP_GID    " - "
-#define HELP_UNSETENV " - "
+#define HELP_GID    "gid - muestra el grupo principal y los grupos secundarios del usuario"
+#define HELP_UNSETENV "unsetenv - elimina variables de ambiente"
 
 // Definición de Estructuras
 

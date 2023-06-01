@@ -49,7 +49,6 @@ int main(){
             // }
             
             globalstatret = ejecutar(argc, argv); //updates return_status
-            printf("%i \n", globalstatret);
 
 
         }
