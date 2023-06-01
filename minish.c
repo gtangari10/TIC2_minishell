@@ -39,13 +39,13 @@ int main(){
     sigemptyset(&sa.sa_mask);
 
     // Settea la acción para hacer ante un Control-C
-    sigaction(SIGINT, &sa, NULL); DESCOMENTAR ESTO
+    sigaction(SIGINT, &sa, NULL);
     
     //FILE *fp; //Comentado para que no de warning
     char line[MAXLINE];
     int argc = MAXWORDS;
     char *argv[MAXWORDS];
-    globalstatret = 0;
+    globalstatret = 0; 
 
     char * name = getenv("USER"); //gets user name
     char * path = getenv("PWD"); //gets user path
@@ -64,7 +64,6 @@ int main(){
             // }
             
             globalstatret = ejecutar(argc, argv); //updates return_status
-            printf("%i \n", globalstatret);
         } else{
             fprintf(stderr, "\n");
             exit(0);
