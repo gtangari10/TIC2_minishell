@@ -1,7 +1,9 @@
 #include <stdio.h> 
 #include <stdlib.h>
-#include "minish.h"
 #include <string.h>
+#include <signal.h>
+#include "minish.h"
+
 
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
@@ -22,22 +24,35 @@ struct builtin_struct builtin_arr[] = {
 
 int globalstatret;
 
+void handleSignal(int signum) {
+    if (signum == 2){
+        fprintf(stderr, "Interrupt!\n");
+    }
+}
+
 int main(){
 
+    // Armar la estructura handleSignal
+    struct sigaction sa;
+    memset(&sa, 0, sizeof(sa));
+    sa.sa_handler = handleSignal;
+    sigemptyset(&sa.sa_mask);
+
+    // Settea la acción para hacer ante un Control-C
+    sigaction(SIGINT, &sa, NULL); DESCOMENTAR ESTO
+    
     //FILE *fp; //Comentado para que no de warning
     char line[MAXLINE];
     int argc = MAXWORDS;
     char *argv[MAXWORDS];
-    globalstatret = 0; //comentado para que no de warnings
+    globalstatret = 0;
 
     char * name = getenv("USER"); //gets user name
     char * path = getenv("PWD"); //gets user path
 
     fprintf(stderr, "(minish) (%s):%s> ", name, path);
     while(1){
-
-
-
+        
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
             //fprintf(stderr, "%s", line);
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
@@ -50,8 +65,9 @@ int main(){
             
             globalstatret = ejecutar(argc, argv); //updates return_status
             printf("%i \n", globalstatret);
-
-
+        } else{
+            fprintf(stderr, "\n");
+            exit(0);
         }
         fprintf(stderr, "(minish) (%s):%s> ", name, path);
     }
