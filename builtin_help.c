@@ -24,6 +24,7 @@ int builtin_help (int argc, char ** argv){
     }
     else{
         fprintf(stderr, "No se encontró comando <%s>\n", argv[1]);
+        return 1;
     }
 
     return 0;
