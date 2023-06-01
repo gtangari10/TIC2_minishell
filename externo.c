@@ -4,6 +4,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
+
+
 int externo (int argc, char ** argv){
     //fprintf(stderr, "Entre a externo\n");
 
@@ -18,8 +20,13 @@ int externo (int argc, char ** argv){
         execvp(argv[0],argv);
         exit(1);
     }
+    else{
+        fprintf(stderr, "minish: execvp error \n: No such file or directory\n%s", argv[0]);
+    }
 
-    //Aca el padre tiene que esperar al hijo para matar a los 2
+    int status;
+    waitpid(pid, &status, 0);
+
 
     return 0;
 }
