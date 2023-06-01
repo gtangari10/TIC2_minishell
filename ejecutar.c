@@ -20,7 +20,7 @@ int ejecutar (int argc, char ** argv){
 int ejecutar(int argc, char **argv){
     struct builtin_struct * elem = builtin_lookup(argv[0]);
     if(elem != NULL){
-        (elem->func)(argc, argv);
+        return (elem->func)(argc, argv);
     }
 
     //return externo;

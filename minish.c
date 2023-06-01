@@ -20,6 +20,7 @@ struct builtin_struct builtin_arr[] = {
     };
 
 
+int globalstatret;
 
 int main(){
 
@@ -27,7 +28,7 @@ int main(){
     char line[MAXLINE];
     int argc = MAXWORDS;
     char *argv[MAXWORDS];
-    int return_status = 0; //comentado para que no de warnings
+    globalstatret = 0; //comentado para que no de warnings
 
     char * name = getenv("USER"); //gets user name
     char * path = getenv("PWD"); //gets user path
@@ -47,8 +48,8 @@ int main(){
             //     fprintf(stderr,"%s\n", argv[i]);
             // }
             
-            return_status = ejecutar(argc, argv); //updates return_status
-            
+            globalstatret = ejecutar(argc, argv); //updates return_status
+            printf("%i \n", globalstatret);
 
 
         }
