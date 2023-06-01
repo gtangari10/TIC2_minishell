@@ -72,7 +72,7 @@ extern struct builtin_struct * builtin_lookup(char *cmd);
 extern int builtin_exit (int argc, char ** argv);
 extern int builtin_help (int argc, char ** argv);
 extern int builtin_history (int argc, char ** argv);
-extern int builtin_status (int argc, char ** argv);
+extern int builtin_status ();
 extern int builtin_cd (int argc, char ** argv);
 extern int builtin_dir (int argc, char ** argv);
 extern int builtin_getenv (int argc, char ** argv);

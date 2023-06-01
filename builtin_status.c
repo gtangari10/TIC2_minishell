@@ -4,7 +4,7 @@
 //No lleva parametros.
 //Muestra el status de retorno del último comando ejecutado.
 
-int builtin_status (int argc, char ** argv){
+int builtin_status (){
     fprintf(stderr, "%d\n",globalstatret);
     return 0;
 }
