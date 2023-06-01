@@ -3,25 +3,6 @@
 #include "minish.h"
 #include <string.h>
 
-
-#define MAXLINE 1024
-#define MAXWORD 256
-
-#define HELP_CD      "cd [..|dir] - cambia de directorio corriente"
-#define HELP_DIR     "dir [str]- muestra archivos en directorio corriente, que tengan 'str'"
-#define HELP_EXIT    "exit [status] - finaliza el minish con un status de retorno (por defecto 0)"
-#define HELP_HELP    "help [cd|dir|exit|help|history|getenv|pid|setenv|status|uid]"
-#define HELP_HISTORY "history [N] - muestra los últimos N (10) comandos escritos"
-#define HELP_GETENV  "getenv var [var] - muestra valor de variable(s) de ambiente"
-#define HELP_PID     "pid - muestra Process Id del minish"
-#define HELP_SETENV  "setenv var valor - agrega o cambia valor de variable de ambiente"
-#define HELP_STATUS  "status - muestra status de retorno de ultimo comando ejecutado"
-#define HELP_UID     "uid - muestra nombre y número de usuario dueño del minish"
-#define HELP_GID    " - "
-#define HELP_UNSETENV " - "
-
-
-
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
         { "dir", builtin_dir, HELP_DIR},
@@ -44,12 +25,17 @@ int main(){
 
     //FILE *fp; //Comentado para que no de warning
     char line[MAXLINE];
-    int argc = MAXWORD;
-    char *argv[MAXWORD];
+    int argc = MAXWORDS;
+    char *argv[MAXWORDS];
     int return_status = 0; //comentado para que no de warnings
 
-    fprintf(stderr, "(minish)$ ");
+    char * name = getenv("USER"); //gets user name
+    char * path = getenv("PWD"); //gets user path
+
+    fprintf(stderr, "(minish) (%s):%s> ", name, path);
     while(1){
+
+
 
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
             //fprintf(stderr, "%s", line);
@@ -66,7 +52,7 @@ int main(){
 
 
         }
-        fprintf(stderr, "(minish)$ ");        
+        fprintf(stderr, "(minish) (%s):%s> ", name, path);
     }
 
 } 
