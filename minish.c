@@ -28,7 +28,7 @@ int main(){
     char line[MAXLINE];
     int argc = MAXWORDS;
     char *argv[MAXWORDS];
-    globalstatret = 0; //comentado para que no de warnings
+    globalstatret = 0; 
 
     char * name = getenv("USER"); //gets user name
     char * path = getenv("PWD"); //gets user path
