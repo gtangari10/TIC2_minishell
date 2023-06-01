@@ -6,4 +6,5 @@ int builtin_unsetenv (int argc, char ** argv){
         unsetenv(argv[i]);
         fprintf(stderr, "%s unset \n", argv[i]);
     }
+    return 0;
 }
