@@ -52,7 +52,10 @@ int main(){
 
     fprintf(stderr, "(minish) (%s):%s> ", name, path);
     while(1){
-        
+        if (feof(stdin) != 0){
+            fprintf(stderr, "\n");
+            break;
+        }
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
             //fprintf(stderr, "%s", line);
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
@@ -64,11 +67,8 @@ int main(){
             // }
             
             globalstatret = ejecutar(argc, argv); //updates return_status
-        } 
-        // else{
-        //     fprintf(stderr, "\n");
-        //     exit(0);
-        // }
+        }
+        path = getenv("PWD"); //gets user path
         fprintf(stderr, "(minish) (%s):%s> ", name, path);
     }
 
