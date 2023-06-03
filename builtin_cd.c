@@ -5,13 +5,15 @@
 #include "minish.h"
 
 int change_path(char* argument);
+int go_home();
 void truncate_path(char* path);
+extern char *previous_path;
 
 int builtin_cd (int argc, char ** argv){
     //Primero hace el control de cantidad de argumentos, si hay solo uno, devuelve 0 y termina
     //Si hay 2, llama a change_path
     if (argc == 1){
-        return 0;
+        return go_home();
     } else if (argc == 2){
         return change_path(argv[1]);
     } else {
@@ -26,26 +28,46 @@ int change_path(char *argument){
 
     // Si hay .., saca lo que viene despues de la ultima /
     // Si empieza con /, el argument es el path entero
+    // Si es -, vuelve al previous path
     // Si no, concatena el path actual con el argument
-    char path_from[MAXCWD];
-
-    getcwd(path_from, MAXCWD);
+    char path[MAXCWD];
     
     if (strcmp(argument, "..") == 0){
-        truncate_path(path_from);
-    } else if (argument[0] == '/'){
-        strcpy(path_from, argument);
-    } else {
-        strcat(path_from, "/");
-        strcat(path_from, argument);
+        getcwd(path, MAXCWD);
+        truncate_path(path);
+    }
+    else if (argument[0] == '/'){
+        strcpy(path, argument);
+    }
+    else if (strcmp(argument, "-") == 0){
+        strcpy(path, previous_path);
+    } 
+    else {
+        getcwd(path, MAXCWD);
+        strcat(path, "/");
+        strcat(path, argument);
     }
 
-    if (chdir(path_from) != 0){
+    if (chdir(path) != 0){
         fprintf(stderr, "%s: El directorio ingresado no existe\n", argument);
         return 1;
+    } else {
+        previous_path = getenv("PWD");
+        setenv("PWD", path, 1);
     }
-    setenv("PWD", path_from, 1);
+    return 0;
+}
 
+int go_home(){
+    char *path;
+    path = getenv("HOME");
+    if (chdir(path) != 0){
+        fprintf(stderr, "No se puede volver a HOME\n");
+        return 1;
+    } else{
+        previous_path = getenv("PWD");
+        setenv("PWD", path, 1);
+    }
     return 0;
 }
 

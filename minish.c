@@ -23,6 +23,7 @@ struct builtin_struct builtin_arr[] = {
 
 
 int globalstatret;
+char *previous_path;
 
 void handleSignal(int signum) {
     if (signum == 2){
@@ -49,7 +50,8 @@ int main(){
 
     char * name = getenv("USER"); //gets user name
     char * path = getenv("PWD"); //gets user path
-
+    previous_path = getenv("PWD"); //copies user path again
+    
     fprintf(stderr, "(minish) (%s):%s> ", name, path);
     while(1){
         if (feof(stdin) != 0){
