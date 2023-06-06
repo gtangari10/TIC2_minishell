@@ -4,9 +4,8 @@
 #include <unistd.h>
 #include "minish.h"
 
-int change_path(char* argument);
-int go_home();
-void truncate_path(char* path);
+static int change_path(char* argument);
+static int go_home();
 extern char *previous_path;
 
 int builtin_cd (int argc, char ** argv){
@@ -23,15 +22,21 @@ int builtin_cd (int argc, char ** argv){
     return 0;
 }
 
-int change_path(char *argument){
+void truncate_path(char *path){
+    //Trunca el path en la primer /, si no hay / es porque esta en el primer nivel
+    // y no hace nada
+    char *last_char =strrchr(path, '/');
+    *last_char = '\0';
+}
+
+void get_new_path(char *argument, char *path){
     //Cambia el path
 
     // Si hay .., saca lo que viene despues de la ultima /
     // Si empieza con /, el argument es el path entero
     // Si es -, vuelve al previous path
     // Si no, concatena el path actual con el argument
-    char path[MAXCWD];
-    
+
     if (strcmp(argument, "..") == 0){
         getcwd(path, MAXCWD);
         truncate_path(path);
@@ -47,6 +52,13 @@ int change_path(char *argument){
         strcat(path, "/");
         strcat(path, argument);
     }
+}
+
+static int change_path(char *argument){
+    // Consigue el nuevo path con get_new_path e intenta cambiar el directorio
+    char path[MAXCWD];
+    get_new_path(argument, path);
+    
 
     if (chdir(path) != 0){
         fprintf(stderr, "%s: El directorio ingresado no existe\n", argument);
@@ -58,7 +70,7 @@ int change_path(char *argument){
     return 0;
 }
 
-int go_home(){
+static int go_home(){
     char *path;
     path = getenv("HOME");
     if (chdir(path) != 0){
@@ -71,9 +83,3 @@ int go_home(){
     return 0;
 }
 
-void truncate_path(char *path){
-    //Trunca el path en la primer /, si no hay / es porque esta en el primer nivel
-    // y no hace nada
-    char *last_char =strrchr(path, '/');
-    *last_char = '\0';
-}
