@@ -17,7 +17,7 @@ int externo (int argc, char ** argv){
     }
 
     if(pid == 0){
-        execvp(argv[0],argv);
+        execvp(argv[0], argv);
         exit(1);
     }
     /*
@@ -28,7 +28,9 @@ int externo (int argc, char ** argv){
 
     int status;
     waitpid(pid, &status, 0);
-
-
+    if (status == 256){
+        fprintf(stderr, "minish: execvp error \n: No such file or directory\n%s", argv[0]);
+        return 2;
+    }
     return status;
 }
