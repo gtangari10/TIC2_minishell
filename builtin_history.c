@@ -6,14 +6,14 @@ extern struct deq * new_deq;
 
 int builtin_history (int argc, char ** argv){
     if(argc == 1){
-        deq_print(new_deq,10);
+        deq_print_ordered(new_deq, 10);
         return 0;
     }
     char * word = argv[1];
     int number = atoi(word);
 
     if(number){
-        deq_print(new_deq, number);
+        deq_print_ordered(new_deq, number);
         return 0;
     }
 

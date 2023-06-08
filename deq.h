@@ -32,3 +32,6 @@ extern struct deq_elem *deq_pop_left(struct deq *deque);
 
 extern void deq_print(struct deq *deque, int cant_print);
 // printf all str from elements from deque, left to right
+
+void deq_print_ordered(struct deq *deque, int cant_print);
+//
