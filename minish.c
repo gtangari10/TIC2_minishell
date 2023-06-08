@@ -66,7 +66,7 @@ int main(){
             //fprintf(stderr, "%s", line);
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
 
-            deq_append(new_deq, argv[0]); //mal
+            deq_append_left(new_deq, argv[0]); //mal
 
             //Tests argv
             

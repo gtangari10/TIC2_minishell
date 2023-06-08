@@ -30,5 +30,5 @@ extern struct deq_elem *deq_pop(struct deq *deque);
 extern struct deq_elem *deq_pop_left(struct deq *deque);
 // pop element of the left end, return element (NULL if empty deque), caller must free if necessary
 
-extern void deq_print(struct deq *deque);
+extern void deq_print(struct deq *deque, int cant_print);
 // printf all str from elements from deque, left to right
