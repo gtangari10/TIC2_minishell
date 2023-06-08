@@ -119,9 +119,24 @@ void deq_print(struct deq *deque, int cant_print){
             cant_print--;
         }
     }
-    
 }
 
+void deq_print_ordered(struct deq *deque, int cant_print){
+
+    int quantity = cant_print;
+
+    if (!(deque ->count==0)){
+        struct deq_elem * e = deque->leftmost;
+        for (; e->next != NULL && cant_print > 0; cant_print--){
+            e = e->next;
+        }
+    quantity = quantity - cant_print;
+        for (; e != NULL; e = e->prev){
+            fprintf(stderr,"%i: %s\n", quantity, e->str);
+            quantity--;
+        }
+    }
+}
 /*
 void deq_print(struct deq *deque, int cant_print){
     // printf all str from elements from deque, left to right

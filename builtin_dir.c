@@ -41,16 +41,6 @@ int builtin_dir (int argc, char ** argv){
     return 0;
 }
 
-int check_directory(char* directory, char* path){
-    get_new_path(directory, path);
-    DIR *dir = opendir(path);
-    if (dir != NULL) {
-        closedir(dir);
-        return 0; // Valid directory
-    }
-    return 1; // Not a directory or does not exist
-}
-
 int print_files_in_directory(char *path){
     DIR * dir = opendir(path);
 
@@ -74,6 +64,7 @@ int print_files_with_strstr_in_directory(char *path, char *str){
     DIR * dir = opendir(path);
 
     if (dir == NULL){
+        fprintf(stderr, "El directorio %s no existe\n", path);
         return 1;
     }
 
