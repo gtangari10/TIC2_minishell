@@ -31,8 +31,12 @@ void handleSignal(int signum) {
     }
 }
 
+
+struct deq * new_deq;
+
 int main(){
 
+    new_deq = deq_create(); //creo estructura para insertar archivos
     // Armar la estructura handleSignal
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
@@ -61,6 +65,8 @@ int main(){
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
             //fprintf(stderr, "%s", line);
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
+
+            deq_append(new_deq, argv[0]); //mal
 
             //Tests argv
             
