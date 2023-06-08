@@ -22,14 +22,14 @@ int builtin_cd (int argc, char ** argv){
     return 0;
 }
 
-void truncate_path(char *path){
+static void truncate_path(char *path){
     //Trunca el path en la primer /, si no hay / es porque esta en el primer nivel
     // y no hace nada
     char *last_char =strrchr(path, '/');
     *last_char = '\0';
 }
 
-void get_new_path(char *argument, char *path){
+static void get_new_path(char *argument, char *path){
     //Cambia el path
 
     // Si hay .., saca lo que viene despues de la ultima /

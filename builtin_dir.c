@@ -2,8 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include "minish.h"
 
 int print_files_in_directory(char *path);
+char * check_directory(char* path);
 
 int builtin_dir (int argc, char ** argv){
 
@@ -12,18 +14,32 @@ int builtin_dir (int argc, char ** argv){
         directory = getenv("PWD");
         return print_files_in_directory(directory);
     }
-    if(argc == 2){
+    else if(argc == 2){
         // primero tengo que fijarme si es el nombre de algún otro dir
-
-        directory = getenv("PWD");
-        // sino me fijo que archivos contienen ese str y los imprimo
-        return print_files_with_strstr_in_directory(directory, argv[1]);
-
+        if ((directory = check_directory(argv[1])) != NULL){
+            return print_files_in_directory(directory);
+        } else{
+            directory = getenv("PWD");
+            // sino me fijo que archivos contienen ese str y los imprimo
+            return print_files_with_strstr_in_directory(directory, argv[1]);
+        }
+    }
+    else if(argc == 3){
+        if ((directory = check_directory(argv[1])) != NULL){
+            return 1;
+        }
+        return print_files_with_strstr_in_directory(directory, argv[2]);
+    }
+    else {
+        fprintf(stderr, "dir acepta uno o dos argumentos, consultar help para ver el uso");
     }
 
     return 0;
 }
 
+char * check_directory(char* path){
+    
+}
 
 int print_files_in_directory(char *path){
     printf("%s", path);
@@ -61,13 +77,44 @@ int print_files_with_strstr_in_directory(char *path, char *str){
             if (result != NULL){
                 printf("%s\n", entry->d_name);
                 printf("HOLAAAAAA\n", entry->d_name);
-
             }
         }
     }
 
     closedir(dir);
     return 0;
+}
+
+static void truncate_path(char *path){
+    //Trunca el path en la primer /, si no hay / es porque esta en el primer nivel
+    // y no hace nada
+    char *last_char =strrchr(path, '/');
+    *last_char = '\0';
+}
+
+static void get_new_path(char *argument, char *path){
+    //Cambia el path
+
+    // Si hay .., saca lo que viene despues de la ultima /
+    // Si empieza con /, el argument es el path entero
+    // Si es -, vuelve al previous path
+    // Si no, concatena el path actual con el argument
+
+    if (strcmp(argument, "..") == 0){
+        getcwd(path, MAXCWD);
+        truncate_path(path);
+    }
+    else if (argument[0] == '/'){
+        strcpy(path, argument);
+    }
+    else if (strcmp(argument, "-") == 0){
+        strcpy(path, previous_path);
+    } 
+    else {
+        getcwd(path, MAXCWD);
+        strcat(path, "/");
+        strcat(path, argument);
+    }
 }
 
 
