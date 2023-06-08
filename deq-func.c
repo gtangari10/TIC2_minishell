@@ -114,7 +114,7 @@ void deq_print(struct deq *deque){
         struct deq_elem * e = deque->leftmost;
 
         for (int i = 0; i < deque->count; i++){
-            printf("%s", e->str);
+            fprintf(stderr,"%s\n", e->str);
             e = e->next;
         }
     }
