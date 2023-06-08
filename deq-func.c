@@ -106,17 +106,36 @@ struct deq_elem *deq_pop_left(struct deq *deque){
 }
 
 
-void deq_print(struct deq *deque){
+void deq_print(struct deq *deque, int cant_print){
+    // printf all str from elements from deque, left to right
+
+
+    if (!(deque ->count==0)){
+        struct deq_elem * e = deque->rightmost;
+
+        for (int i = 0; i < deque->count && cant_print>0; i++){
+            fprintf(stderr,"%s\n", e->str);
+            e = e->prev;
+            cant_print--;
+        }
+    }
+    
+}
+
+/*
+void deq_print(struct deq *deque, int cant_print){
     // printf all str from elements from deque, left to right
 
 
     if (!(deque ->count==0)){
         struct deq_elem * e = deque->leftmost;
 
-        for (int i = 0; i < deque->count; i++){
+        for (int i = 0; i < deque->count && cant_print>0; i++){
             fprintf(stderr,"%s\n", e->str);
             e = e->next;
+            cant_print--;
         }
     }
     
 }
+*/
