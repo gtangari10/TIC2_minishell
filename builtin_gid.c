@@ -4,7 +4,7 @@
 #include <grp.h>
 
 
-int builtin_gid (){
+int builtin_gid (int argc, char ** argv){
 
     int cant_groups = getgroups(0, NULL);//calculado para defnir gid_group
     gid_t gid = getgid();

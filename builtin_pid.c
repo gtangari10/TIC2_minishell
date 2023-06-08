@@ -1,7 +1,7 @@
 #include <stdio.h> 
 #include <unistd.h>
 
-int builtin_pid (){
+int builtin_pid (int argc, char ** argv){
     // no lleva parámetros, muestra el process id del shell
     pid_t pid = getpid();
     pid_t ppid = getppid();
