@@ -12,6 +12,13 @@ int builtin_dir (int argc, char ** argv){
         directory = getenv("PWD");
         return print_files_in_directory(directory);
     }
+    if(argc == 2){
+        // primero tengo que fijarme si es el nombre de algún otro dir
+
+        // sino me fijo que archivos contienen ese str y los imprimo
+        return print_files_with_strstr_in_directory(directory, argv[1]);
+
+    }
 
     return 0;
 }
@@ -28,6 +35,27 @@ int print_files_in_directory(char *path){
     while ((entry = readdir(dir)) != NULL) {
         if (!(*entry->d_name == '.')){
             printf("%s\n", entry->d_name);
+        }
+    }
+
+    closedir(dir);
+    return 0;
+}
+
+int print_files_with_strstr_in_directory(char *path, char *str){
+    printf("%s", str);
+    DIR * dir = opendir(path);
+
+    if (dir == NULL){
+        return 1;
+    }
+
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
+        if (!(*entry->d_name == '.')){
+            if (strstr(str, entry->d_name) != NULL){
+                printf("%s\n", entry->d_name);
+            }
         }
     }
 
