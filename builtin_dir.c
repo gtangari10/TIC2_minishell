@@ -73,10 +73,13 @@ int print_files_with_strstr_in_directory(char *path, char *str){
     struct dirent *entry;
     while ((entry = readdir(dir)) != NULL) {
         if (!(*entry->d_name == '.')){
-            result = strstr(str, entry->d_name);
+            result = strstr(entry->d_name, str);
             if (result != NULL){
                 printf("%s\n", entry->d_name);
+<<<<<<< HEAD
                 printf("HOLAAAAAA\n", entry->d_name);
+=======
+>>>>>>> 2e026059af1d7881962d809bc5b74403abe29fea
             }
         }
     }
@@ -116,6 +119,8 @@ static void get_new_path(char *argument, char *path){
         strcat(path, argument);
     }
 }
+
+
 
 
 // dir [texto/directorio] – Simula una ejecución simplificada del comando ls -l. Sin
