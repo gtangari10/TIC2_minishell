@@ -139,7 +139,7 @@ void deq_print_ordered(struct deq *deque, int cant_print){
     quantity = quantity - cant_print - 1;
 
     for (; e != NULL && quantity >= 0; e = e->next) {
-        fprintf(stderr,"%i: %s\n", quantity, e->str);
+        fprintf(stderr,"%i: %s", quantity, e->str);
         quantity--;
     }
     
