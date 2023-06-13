@@ -131,7 +131,7 @@ void at_exit(){
     struct deq_elem *e = new_deq->leftmost;
     //printear todo lo que esta en la cosa esta
     for (int i = 0; i < new_deq->count; i++){
-        fprintf(fp, e->str);// NO LE GUSTA
+        fprintf(fp, "%s", e->str);// NO LE GUSTA
         e = e->next;
     }
 
