@@ -18,6 +18,10 @@
 #define HELP_GID    "gid - muestra el grupo principal y los grupos secundarios del usuario"
 #define HELP_UNSETENV "unsetenv - elimina variables de ambiente"
 
+#define ANSI_COLOR_GREEN    "\x1b[32m"
+#define ANSI_COLOR_RESET    "\x1b[0m"
+#define ANSI_COLOR_CYAN     "\e[0;36m"
+
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
         { "dir", builtin_dir, HELP_DIR},
@@ -74,24 +78,25 @@ int main(){
     load_history(new_deq);
     char * hist_argv;
 
-    fprintf(stderr, "(minish) (%s):%s> ", name, path);
+    fprintf(stderr, ANSI_COLOR_GREEN"(minish)" ANSI_COLOR_CYAN " (%s):%s> " ANSI_COLOR_RESET, name, path);
     while(1){
+        if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
+            argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
+            if (argc > 0){
+                hist_argv = strdup(argv[0]);
+                strcat(hist_argv, "\n");
+                deq_append(new_deq, hist_argv); //mal
+                globalstatret = ejecutar(argc, argv); //updates return_status
+            }
+        }
         if (feof(stdin) != 0){
             fprintf(stderr, "\n");
             at_exit();
             break;
         }
-        if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
-            argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
-
-            hist_argv = strdup(argv[0]);
-            strcat(hist_argv, "\n");
-            deq_append(new_deq, hist_argv); //mal
-
-            globalstatret = ejecutar(argc, argv); //updates return_status
-        }
         path = getenv("PWD"); //gets user path
-        fprintf(stderr, "(minish) (%s):%s> ", name, path);
+        fprintf(stderr, ANSI_COLOR_GREEN"(minish)" ANSI_COLOR_CYAN " (%s):%s> " ANSI_COLOR_RESET, name, path);
+
     }
 
 } 
