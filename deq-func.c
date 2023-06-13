@@ -123,29 +123,6 @@ void deq_print(struct deq *deque, int cant_print){
 
 
 
-/*
-void deq_print_ordered(struct deq *deque, int cant_print){
-
-    int quantity = cant_print;
-
-    if (!(deque ->count==0)){
-        struct deq_elem * e = deque->rightmost;
-        for (; e->prev != NULL && cant_print > 0; cant_print--){
-            e = e->prev;
-        }
-        //e = e->next;
-        quantity = quantity - cant_print - 1;
-
-        for (; e != NULL && quantity >= 0; e = e->next){
-            fprintf(stderr,"%i: %s\n", quantity, e->str);
-            quantity--;
-        }
-    }
-}
-*/
-
-
-
 void deq_print_ordered(struct deq *deque, int cant_print){
 
     if (deque ->count==0) {
@@ -155,13 +132,13 @@ void deq_print_ordered(struct deq *deque, int cant_print){
     int quantity = cant_print;
     struct deq_elem * e = deque->rightmost;
 
-    for (; e->prev != NULL && cant_print > 0; cant_print--){
+    for (; e->prev != NULL && cant_print > 0; cant_print--) {
         e = e->prev;
     }
     e = e->next;
     quantity = quantity - cant_print - 1;
 
-    for (; e != NULL && quantity >= 0; e = e->next){
+    for (; e != NULL && quantity >= 0; e = e->next) {
         fprintf(stderr,"%i: %s", quantity, e->str);
         quantity--;
     }
