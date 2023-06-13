@@ -121,36 +121,49 @@ void deq_print(struct deq *deque, int cant_print){
     }
 }
 
+
+
+/*
 void deq_print_ordered(struct deq *deque, int cant_print){
 
     int quantity = cant_print;
 
     if (!(deque ->count==0)){
-        struct deq_elem * e = deque->leftmost;
-        for (; e->next != NULL && cant_print > 0; cant_print--){
-            e = e->next;
+        struct deq_elem * e = deque->rightmost;
+        for (; e->prev != NULL && cant_print > 0; cant_print--){
+            e = e->prev;
         }
-    quantity = quantity - cant_print;
-        for (; e != NULL; e = e->prev){
+        //e = e->next;
+        quantity = quantity - cant_print - 1;
+
+        for (; e != NULL && quantity >= 0; e = e->next){
             fprintf(stderr,"%i: %s\n", quantity, e->str);
             quantity--;
         }
     }
 }
-/*
-void deq_print(struct deq *deque, int cant_print){
-    // printf all str from elements from deque, left to right
+*/
 
 
-    if (!(deque ->count==0)){
-        struct deq_elem * e = deque->leftmost;
 
-        for (int i = 0; i < deque->count && cant_print>0; i++){
-            fprintf(stderr,"%s\n", e->str);
-            e = e->next;
-            cant_print--;
-        }
+void deq_print_ordered(struct deq *deque, int cant_print){
+
+    if (deque ->count==0) {
+        return;
+    }
+
+    int quantity = cant_print;
+    struct deq_elem * e = deque->rightmost;
+
+    for (; e->prev != NULL && cant_print > 0; cant_print--){
+        e = e->prev;
+    }
+    e = e->next;
+    quantity = quantity - cant_print - 1;
+
+    for (; e != NULL && quantity >= 0; e = e->next){
+        fprintf(stderr,"%i: %s", quantity, e->str);
+        quantity--;
     }
     
 }
-*/
