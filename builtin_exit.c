@@ -1,11 +1,13 @@
 #include <stdio.h> 
 #include <stdlib.h>
 #include "minish.h"
+#include "utils.h"
 
 int builtin_exit (int argc, char ** argv){
     // termina el shell, admite un parámetro que es el status de retorno. 
     //Sin ningún parámetro, usa como status de retorno el del último comando ejecutado.
     int status = globalstatret;
+    at_exit();
     fprintf(stderr, "Bye bye :( \n");
     if (argc == 1){
         exit(status);

@@ -3,6 +3,7 @@
 #include <string.h>
 #include <signal.h>
 #include "minish.h"
+#include "utils.h"
 
 #define HELP_CD      "cd [..|dir] - cambia de directorio corriente"
 #define HELP_DIR     "dir [str]- muestra archivos en directorio corriente, que tengan 'str'"
@@ -37,6 +38,7 @@ struct builtin_struct builtin_arr[] = {
 int globalstatret;
 char *previous_path;
 void load_history(struct deq *);
+void at_exit();
 
 void handleSignal(int signum) {
     if (signum == 2){
@@ -70,29 +72,22 @@ int main(){
     previous_path = getenv("PWD"); //copies user path again
     
     load_history(new_deq);
-    deq_print_ordered(new_deq, 5);
     char * hist_argv;
 
     fprintf(stderr, "(minish) (%s):%s> ", name, path);
     while(1){
         if (feof(stdin) != 0){
             fprintf(stderr, "\n");
+            at_exit();
             break;
         }
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
-            //fprintf(stderr, "%s", line);
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
 
             hist_argv = strdup(argv[0]);
             strcat(hist_argv, "\n");
             deq_append(new_deq, hist_argv); //mal
 
-            //Tests argv
-            
-            // for(int i = 0; i < argc; i++){
-            //     fprintf(stderr,"%s\n", argv[i]);
-            // }
-            
             globalstatret = ejecutar(argc, argv); //updates return_status
         }
         path = getenv("PWD"); //gets user path
@@ -103,19 +98,41 @@ int main(){
 
 void load_history(struct deq * deque){
     FILE *fp;
-    char * history_path = getenv("HOME");
+    char * history_path = strdup(getenv("HOME"));
     char line[MAXCWD];
 
     strcat(history_path, "/");
     strcat(history_path, HISTORY_FILE);
-    fprintf(stderr, "%s \n", history_path);
 
     if ((fp = fopen(history_path, "r")) == NULL){
         printf("Unable to create/open the file.\n");
         fprintf(stderr, "The file could not be opened");
+        //AGREGAR PERROR
     }
     
     while (fgets(line, MAXCWD, fp) != NULL) {
         deq_append(deque, line);
     }
+}
+
+void at_exit(){
+    FILE *fp;
+    char * history_path = strdup(getenv("HOME"));
+
+    strcat(history_path, "/");
+    strcat(history_path, HISTORY_FILE);
+
+    if ((fp = fopen(history_path, "w")) == NULL){
+        printf("Unable to create/open the file.\n");
+        fprintf(stderr, "The file could not be opened");
+        //AGREGAR PERROR
+    }
+    
+    struct deq_elem *e = new_deq->leftmost;
+    //printear todo lo que esta en la cosa esta
+    for (int i = 0; i < new_deq->count; i++){
+        fprintf(fp, e->str);// NO LE GUSTA
+        e = e->next;
+    }
+
 }
