@@ -4,6 +4,18 @@
 #include <signal.h>
 #include "minish.h"
 
+#define HELP_CD      "cd [..|dir] - cambia de directorio corriente"
+#define HELP_DIR     "dir [str]- muestra archivos en directorio corriente, que tengan 'str'"
+#define HELP_EXIT    "exit [status] - finaliza el minish con un status de retorno (por defecto 0)"
+#define HELP_HELP    "help [cd|dir|exit|help|history|getenv|pid|setenv|status|gid|unsetenv|uid]"
+#define HELP_HISTORY "history [N] - muestra los últimos N (10) comandos escritos"
+#define HELP_GETENV  "getenv var [var] - muestra valor de variable(s) de ambiente"
+#define HELP_PID     "pid - muestra Process Id del minish"
+#define HELP_SETENV  "setenv var valor - agrega o cambia valor de variable de ambiente"
+#define HELP_STATUS  "status - muestra status de retorno de ultimo comando ejecutado"
+#define HELP_UID     "uid - muestra nombre y número de usuario dueño del minish"
+#define HELP_GID    "gid - muestra el grupo principal y los grupos secundarios del usuario"
+#define HELP_UNSETENV "unsetenv - elimina variables de ambiente"
 
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
@@ -24,6 +36,7 @@ struct builtin_struct builtin_arr[] = {
 
 int globalstatret;
 char *previous_path;
+void load_history(struct deq *);
 
 void handleSignal(int signum) {
     if (signum == 2){
@@ -56,6 +69,10 @@ int main(){
     char * path = getenv("PWD"); //gets user path
     previous_path = getenv("PWD"); //copies user path again
     
+    load_history(new_deq);
+    deq_print_ordered(new_deq, 5);
+    char * hist_argv;
+
     fprintf(stderr, "(minish) (%s):%s> ", name, path);
     while(1){
         if (feof(stdin) != 0){
@@ -66,7 +83,9 @@ int main(){
             //fprintf(stderr, "%s", line);
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
 
-            deq_append(new_deq, argv[0]); //mal
+            hist_argv = strdup(argv[0]);
+            strcat(hist_argv, "\n");
+            deq_append(new_deq, hist_argv); //mal
 
             //Tests argv
             
@@ -81,3 +100,22 @@ int main(){
     }
 
 } 
+
+void load_history(struct deq * deque){
+    FILE *fp;
+    char * history_path = getenv("HOME");
+    char line[MAXCWD];
+
+    strcat(history_path, "/");
+    strcat(history_path, HISTORY_FILE);
+    fprintf(stderr, "%s \n", history_path);
+
+    if ((fp = fopen(history_path, "r")) == NULL){
+        printf("Unable to create/open the file.\n");
+        fprintf(stderr, "The file could not be opened");
+    }
+    
+    while (fgets(line, MAXCWD, fp) != NULL) {
+        deq_append(deque, line);
+    }
+}
