@@ -3,6 +3,8 @@
 #include "deq.h"
 #include "wrappers.h"
 
+// Estructura utilizada para el history.
+
 struct deq *deq_create(void){
     // create new, empty deq, returns pointer
     struct deq *d;

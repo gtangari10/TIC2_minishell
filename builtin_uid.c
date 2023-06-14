@@ -3,6 +3,9 @@
 #include <pwd.h>
 #include <stdlib.h>
 
+// Muestra el userid como número y también el nombre de usuario.
+// Sin parámetros.
+
 int builtin_uid (){
     uid_t uid = getuid();
     struct passwd * name = getpwuid(uid);

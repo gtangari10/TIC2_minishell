@@ -22,6 +22,7 @@
 #define ANSI_COLOR_RESET    "\x1b[0m"
 #define ANSI_COLOR_CYAN     "\e[0;36m"
 
+// Array que almacena todos los builtins. 
 struct builtin_struct builtin_arr[] = {
         { "cd", builtin_cd, HELP_CD },
         { "dir", builtin_dir, HELP_DIR},
@@ -100,6 +101,8 @@ int main(){
     }
 
 } 
+
+// Esta funcion es parte del history.
 
 void load_history(struct deq * deque){
     FILE *fp;

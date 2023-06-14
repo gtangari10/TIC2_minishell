@@ -11,6 +11,16 @@ int check_directory(char* directory, char* path);
 void get_new_path(char* argument, char* path);
 extern char* previous_path;
 
+
+//Sin argumentos muestra la lista de archivos del directorio corriente. 
+
+//Con un único argumento, será un texto que:
+//    si corresponde a un directorio existente, muestra la lista de todos los archivos de ese directorio.
+//    si no es un directorio, muestra todos los archivos cuyo nombre contenga ese texto.
+
+//Con dos argumentos, el funcionamiento es la fusión de los dos casos anteriores:
+//    el primer argumento debe ser un directorio (si no, es un error) y el segundo es el texto de filtro.
+
 int builtin_dir (int argc, char ** argv){
 
     char *directory;
@@ -60,7 +70,6 @@ int print_files_in_directory(char *path){
 }
 
 int print_files_with_strstr_in_directory(char *path, char *str){
-    // printf("%s", str);
     DIR * dir = opendir(path);
 
     if (dir == NULL){

@@ -7,10 +7,11 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-
+// Intenta ejecutar vía fork/execvp, un comando externo.
+// El valor de retorno es el status de retorno del comando externo ejecutado.
 
 int externo (int argc, char ** argv){
-    //fprintf(stderr, "Entre a externo\n");
+    
     struct sigaction sig_old_action;
     struct sigaction sig_new_action;
     memset(&sig_new_action, 0, sizeof(sig_old_action));

@@ -6,9 +6,12 @@ extern char **environ;
 static int all_env_variables();
 static int print_variables(int argc, char **argv);
 
+// Muestra los valores de dichas variables de ambiente pasadas como argumentos.
+// Los parámetros son las variables de ambiente (“environment”) para las cuales se quiere saber el valor. 
+// La salida es una serie de líneas variable=valor.
 
 int builtin_getenv (int argc, char **argv){
-    // Devuelve los valores de las variables de ambiente pasadas por los argumentos
+    
     if (argc == 1){
         return all_env_variables();
     } else {

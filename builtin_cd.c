@@ -8,6 +8,8 @@ static int change_path(char* argument);
 static int go_home();
 extern char *previous_path;
 
+// cd cambia el directorio corriente, admite un parámetro.
+
 int builtin_cd (int argc, char ** argv){
     //Primero hace el control de cantidad de argumentos, si hay solo uno, devuelve 0 y termina
     //Si hay 2, llama a change_path
