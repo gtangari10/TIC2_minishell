@@ -22,7 +22,7 @@ int builtin_exit (int argc, char ** argv){
         if (*endptr == '\0') {
             exit(value);
         } else {
-            fprintf(stderr, "El argumento no es un estado válido, cerrando con el status anterior");
+            fprintf(stderr, "El argumento no es un estado válido, cerrando con el status anterior.\n");
             exit(status);
         }
     }

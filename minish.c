@@ -121,6 +121,8 @@ void load_history(struct deq * deque){
     while (fgets(line, MAXCWD, fp) != NULL) {
         deq_append(deque, line);
     }
+
+    fclose(fp);
 }
 
 void at_exit(){
@@ -137,10 +139,20 @@ void at_exit(){
     }
     
     struct deq_elem *e = new_deq->leftmost;
+    struct deq_elem *next;
     //printear todo lo que esta en la cosa esta
     for (int i = 0; i < new_deq->count; i++){
         fprintf(fp, "%s", e->str);// NO LE GUSTA
-        e = e->next;
+        next = e->next;
+        if (e != NULL){
+            free(e);
+        }
+        e = next;
     }
+
+    if (new_deq != NULL){
+        free(new_deq);
+    }
+    fclose(fp);
 
 }
