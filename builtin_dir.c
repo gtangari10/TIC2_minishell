@@ -31,10 +31,12 @@ int builtin_dir (int argc, char ** argv){
     else if(argc == 2){
         char path[MAXCWD];
         get_new_path(argv[1], path);
+        // printf("%s \n", path); //BORRAR
+
         int result = print_files_in_directory(path);
 
         if (result == 0) return 0;
-
+        // printf("LLEGO ACA"); //BORRAR
         directory = getenv("PWD");
         // sino me fijo que archivos contienen ese str y los imprimo
         return print_files_with_strstr_in_directory(directory, argv[1]);
@@ -73,7 +75,7 @@ int print_files_with_strstr_in_directory(char *path, char *str){
     DIR * dir = opendir(path);
 
     if (dir == NULL){
-        fprintf(stderr, "El directorio %s no existe\n", path);
+        perror("No se pudo abrir el directorio");
         return 1;
     }
 
@@ -88,7 +90,10 @@ int print_files_with_strstr_in_directory(char *path, char *str){
         }
     }
 
-    closedir(dir);
+    if (closedir(dir) == -1){
+        perror("No se pudo cerrar el directorio");
+        return 1;
+    }
     return 0;
 }
 

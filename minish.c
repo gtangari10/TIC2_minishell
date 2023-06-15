@@ -111,10 +111,11 @@ void load_history(struct deq * deque){
 
     strcat(history_path, "/");
     strcat(history_path, HISTORY_FILE);
+    fprintf(stderr, "%s \n", history_path);
 
     if ((fp = fopen(history_path, "r")) == NULL){
-        printf("Unable to create/open the file.\n");
-        fprintf(stderr, "The file could not be opened");
+        perror("No abre la history para leer");
+        return;
         //AGREGAR PERROR
     }
     
@@ -131,10 +132,11 @@ void at_exit(){
 
     strcat(history_path, "/");
     strcat(history_path, HISTORY_FILE);
+    fprintf(stderr, "%s \n", history_path);
 
     if ((fp = fopen(history_path, "w")) == NULL){
-        printf("Unable to create/open the file.\n");
-        fprintf(stderr, "The file could not be opened");
+        perror("No se pudo escribir la history");
+        return;
         //AGREGAR PERROR
     }
     
