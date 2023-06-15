@@ -85,7 +85,7 @@ int main(){
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
             if (argc > 0){
-                hist_argv = strdup_or_exit(argv[0]);
+                hist_argv = strdup_or_exit(argv[0] + 1);
                 strcat(hist_argv, "\n");
                 deq_append(new_deq, hist_argv); //mal
                 globalstatret = ejecutar(argc, argv); //updates return_status
