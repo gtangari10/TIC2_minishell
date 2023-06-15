@@ -54,6 +54,8 @@ int builtin_dir (int argc, char ** argv){
 }
 
 int compareStrings(const void *a, const void *b) {
+    // Es una funcion que se necesita para el quicksort
+    // Se usa para comparar lo que esta en el array
     const char *str1 = *(const char **)a;
     const char *str2 = *(const char **)b;
     return strcmp(str1, str2);
@@ -108,20 +110,44 @@ int print_files_with_strstr_in_directory(char *path, char *str){
     }
 
     char *result;
+
+    int num_entries = 0;
+    int max_entries = INITIAL_SIZE;  // El array que guarda los nombres de directorios empieza con este tamaño
+    char **filenames = malloc(max_entries * sizeof(char *));
+
     struct dirent *entry;
     while ((entry = readdir(dir)) != NULL) {
         if (!(*entry->d_name == '.')){
             result = strstr(entry->d_name, str);
             if (result != NULL){
-                printf("%s\n", entry->d_name);
+                filenames[num_entries] = strdup_or_exit(entry->d_name);
+                num_entries++;
+
+                // Resizea si es necesario
+                if (num_entries >= max_entries) {
+                    max_entries *= 2;
+                    filenames = realloc(filenames, max_entries * sizeof(char *));
+                }
             }
         }
     }
+
+
+    // Ordena con qsort de stdlib
+    // Le paso el array, la cantidad de entradas escritas, el tamaño de los array, y la función que compara
+    qsort(filenames, num_entries, sizeof(char *), compareStrings);
+
+    for (int i = 0; i < num_entries; i++) {
+        printf("%s\n", filenames[i]);
+        free(filenames[i]);  // Libera cada entrada
+    }
+    free(filenames);  // Libera el array
 
     if (closedir(dir) == -1){
         perror("No se pudo cerrar el directorio");
         return 1;
     }
+
     return 0;
 }
 

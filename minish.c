@@ -139,6 +139,9 @@ void at_exit(){
         fprintf(fp, "%s", e->str);
         next = e->next;
         if (e != NULL){
+            if (e->str != NULL){
+                free(e->str);
+            }
             free(e);
         }
         e = next;
