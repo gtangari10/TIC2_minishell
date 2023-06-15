@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include "wrappers.h"
 #include "minish.h"
 #include "utils.h"
 
@@ -53,7 +54,7 @@ void handleSignal(int signum) {
 
 
 struct deq * new_deq;
-
+char * history_path;
 int main(){
 
     new_deq = deq_create(); //creo estructura para insertar archivos
@@ -84,7 +85,7 @@ int main(){
         if(fgets(line, MAXLINE, stdin) != NULL && strcmp(line, "\n") != 0){
             argc = linea2argv(line, MAXWORDS, argv); //updates the value of argc
             if (argc > 0){
-                hist_argv = strdup(argv[0]);
+                hist_argv = strdup_or_exit(argv[0]);
                 strcat(hist_argv, "\n");
                 deq_append(new_deq, hist_argv); //mal
                 globalstatret = ejecutar(argc, argv); //updates return_status
@@ -106,14 +107,15 @@ int main(){
 
 void load_history(struct deq * deque){
     FILE *fp;
-    char * history_path = strdup(getenv("HOME"));
+    history_path = malloc_or_exit(MAXLINE);
+    strcpy(history_path, getenv("HOME"));
     char line[MAXCWD];
 
     strcat(history_path, "/");
     strcat(history_path, HISTORY_FILE);
     fprintf(stderr, "%s \n", history_path);
 
-    if ((fp = fopen(history_path, "r")) == NULL){
+    if ((fp = fopen_or_exit(history_path, "r")) == NULL){
         perror("No abre la history para leer");
         return;
         //AGREGAR PERROR
@@ -128,13 +130,9 @@ void load_history(struct deq * deque){
 
 void at_exit(){
     FILE *fp;
-    char * history_path = strdup(getenv("HOME"));
-
-    strcat(history_path, "/");
-    strcat(history_path, HISTORY_FILE);
     fprintf(stderr, "%s \n", history_path);
 
-    if ((fp = fopen(history_path, "w")) == NULL){
+    if ((fp = fopen_or_exit(history_path, "w")) == NULL){
         perror("No se pudo escribir la history");
         return;
         //AGREGAR PERROR
