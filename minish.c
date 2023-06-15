@@ -104,7 +104,6 @@ int main(){
 } 
 
 // Esta funcion es parte del history.
-
 void load_history(struct deq * deque){
     FILE *fp;
     history_path = malloc_or_exit(MAXLINE);
@@ -113,18 +112,15 @@ void load_history(struct deq * deque){
 
     strcat(history_path, "/");
     strcat(history_path, HISTORY_FILE);
-    fprintf(stderr, "%s \n", history_path);
 
     if ((fp = fopen_or_exit(history_path, "r")) == NULL){
         perror("No abre la history para leer");
         return;
-        //AGREGAR PERROR
     }
     
     while (fgets(line, MAXCWD, fp) != NULL) {
         deq_append(deque, line);
     }
-
     fclose(fp);
 }
 
@@ -135,14 +131,12 @@ void at_exit(){
     if ((fp = fopen_or_exit(history_path, "w")) == NULL){
         perror("No se pudo escribir la history");
         return;
-        //AGREGAR PERROR
     }
     
     struct deq_elem *e = new_deq->leftmost;
     struct deq_elem *next;
-    //printear todo lo que esta en la cosa esta
     for (int i = 0; i < new_deq->count; i++){
-        fprintf(fp, "%s", e->str);// NO LE GUSTA
+        fprintf(fp, "%s", e->str);
         next = e->next;
         if (e != NULL){
             free(e);

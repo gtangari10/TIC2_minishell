@@ -73,7 +73,6 @@ int print_files_in_directory(char *path){
 
 int print_files_with_strstr_in_directory(char *path, char *str){
     DIR * dir = opendir(path);
-
     if (dir == NULL){
         perror("No se pudo abrir el directorio");
         return 1;
